@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="JavaEEBasic">
+	<property environment="env"/>
+	<property name="base-dir" value="bin"/>
+	<property name="project-name" value="JavaEEBasic"/>
+	<property name="created-by" value="Chris Wong"/>
+	<property name="main-class" value="servlet.HelloWorld"/>
+	<property name="helloworld-home"  value="${env.TOMCAT_HOME}\HelloWorld"/>
+	
+	<!-- compile the project -->
+	<target name="compile" description="compile the source files">
+		<javac includeantruntime="false" srcdir="./src" destdir="${base-dir}" >
+		</javac>
+	</target>
+
+	<!-- prepare  -->
+	<target name="prepare" >
+		<mkdir dir="WEB-INF/classes" />
+	</target>
+
+	<!-- create the web content -->
+	<target name="build" depends="prepare">
+		<copy todir="WEB-INF/classes">
+			 <fileset dir="${base-dir}" includes="**/*" />
+		</copy>
+	</target>
+	
+	<!-- launch the web content -->
+	<target name="launch" depends="prepare">
+		<copydir src="WEB-INF" dest="${helloworld-home}\WEB-INF" />
+		<copy todir="${helloworld-home}" file="HelloWorld.jsp" />
+	</target>
+</project>
